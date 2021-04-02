@@ -3,3 +3,4 @@ export * from './ping.controller';
 
 export * from './classified.controller';
 export * from './category-classified.controller';
+export * from './classified-category.controller';
