@@ -60,12 +60,12 @@ export class CategoryClassifiedController {
         'application/json': {
           schema: getModelSchemaRef(Classified, {
             title: 'NewClassifiedInCategory',
-            exclude: ['category_id'],
+            exclude: ['id'],
             optional: ['categoryId']
           }),
         },
       },
-    }) classified: Omit<Classified, 'category_id'>,
+    }) classified: Omit<Classified, 'id'>,
   ): Promise<Classified> {
     return this.categoryRepository.classifieds(id).create(classified);
   }

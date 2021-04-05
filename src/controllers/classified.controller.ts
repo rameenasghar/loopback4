@@ -4,18 +4,22 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Classified} from '../models';
 import {ClassifiedRepository} from '../repositories';
@@ -107,8 +111,15 @@ export class ClassifiedController {
   async findById(
     @param.path.number('id') id: number,
     @param.filter(Classified, {exclude: 'where'}) filter?: FilterExcludingWhere<Classified>
-  ): Promise<Classified> {
-    return this.classifiedRepository.findById(id, filter);
+  ): Promise<Classified | null> {
+    return this.classifiedRepository.findOne(
+      {
+        where: {
+          id: id,
+        },
+        include: [{relation: 'category'}]
+      }
+    );
   }
 
   @patch('/classifieds/{id}')

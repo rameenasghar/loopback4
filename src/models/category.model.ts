@@ -1,27 +1,43 @@
 import {Entity, model, property, hasMany} from '@loopback/repository';
 import {Classified} from './classified.model';
 
-@model({settings: {strict: false}})
+@model({settings:
+  {
+    strict: true,
+    postgresql: {schema: 'public', table: 'Category'}
+  }
+})
 export class Category extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
+    postgresql: {
+      columnName: 'id',
+      dataType: 'integer',
+      dataLength: null,
+      dataPrecision: null,
+      dataScale: 0,
+      nullable: 'NO',
+    },
   })
   id?: number;
 
   @property({
     type: 'string',
-    required: true,
+    scale: 0,
+    postgresql: {
+      columnName: 'title',
+      dataType: 'character varying',
+      dataLength: 50,
+      dataScale: 0,
+      nullable: 'NO',
+    },
   })
   title: string;
 
   @hasMany(() => Classified)
   classifieds: Classified[];
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Category>) {

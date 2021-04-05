@@ -1,21 +1,25 @@
 import {
   Count,
   CountSchema,
-  Filter,
+
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
+  del, get,
+  getModelSchemaRef, param,
+
+
+  patch, post,
+
+
+
+
   put,
-  del,
+
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Category} from '../models';
 import {CategoryRepository} from '../repositories';
@@ -65,15 +69,14 @@ export class CategoryController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Category, {includeRelations: true}),
+          items: getModelSchemaRef(Category),
         },
       },
     },
   })
   async find(
-    @param.filter(Category) filter?: Filter<Category>,
   ): Promise<Category[]> {
-    return this.categoryRepository.find(filter);
+    return this.categoryRepository.find();
   }
 
   @patch('/categories')
